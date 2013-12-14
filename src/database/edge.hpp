@@ -14,7 +14,8 @@ private:
 
 public:
 	//set-get methods
-
+    node* firstNode();
+    node* secondNode();
 public:
 	edge(node*, node*);
 

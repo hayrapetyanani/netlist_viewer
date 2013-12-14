@@ -1,4 +1,5 @@
 #include "instance.hpp"
+#include "instance_port.hpp"
 	
 Instance::Instance(std::string n, const Module* mModule, const Module* pModule)
         : name_(n)
@@ -18,10 +19,13 @@ Instance::setName(const std::string& n)
     name_ = n;
 }	
 
-void 
-Instance::addPort(const InstancePort& port) 
+InstancePort* 
+Instance::addPort(const std::string& n, const Port::Type t)
 {
+    InstancePort* port = new InstancePort(n, t);
+    port->setInstance(this);
     ports_.push_back(port);
+    return port;
 }
 
 const Instance::InstPortCollection& 
@@ -53,3 +57,4 @@ Instance::setParentModule(const Module* module)
 { 
     parentModule_ = module; 
 }
+    

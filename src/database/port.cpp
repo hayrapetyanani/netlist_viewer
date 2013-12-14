@@ -1,4 +1,5 @@
 #include "port.hpp"
+#include "instance.hpp"
 
 Port::Port(std::string n, Type t)
     : name_(n)
@@ -28,3 +29,14 @@ Port::setType(Type t)
 }
 
 
+void
+Port::setInstance(Instance* inst)
+{
+    instance_ = inst;
+}
+
+const Instance* 
+Port::instance() const
+{
+    return instance_;
+}

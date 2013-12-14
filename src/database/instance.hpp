@@ -18,12 +18,12 @@ private:
 //    Instance (const Instance&);
 //    void operator=(const Instance&);
 public:
-	typedef std::vector<InstancePort> InstPortCollection;
+	typedef std::vector<InstancePort*> InstPortCollection;
 	Instance(std::string n, const Module* mModule, const Module* pModule);
 	
 	const std::string& name() const;
 	void setName(const std::string& n); 
-    void addPort(const InstancePort& port);
+    InstancePort* addPort(const std::string& n, const Port::Type t);
     const InstPortCollection& ports() const;
 	const Module* masterModule() const;	
     const Module* parentModule() const;	

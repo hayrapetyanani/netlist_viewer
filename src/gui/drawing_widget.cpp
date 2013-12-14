@@ -1,10 +1,13 @@
-#include "drawing_widget.hpp"
 #include <QVBoxLayout>
 #include <QGraphicsEllipseItem>
+#include <iostream>
 
-drawing_widget::drawing_widget(QWidget* p)
-    :QWidget(p)
-	,m_project(Project::get())
+#include "drawing_widget.hpp"
+#include "../database/project.hpp"
+
+drawing_widget::drawing_widget(QWidget* p = NULL)
+    : QWidget(p)
+	, m_project(Project::get())
 {
 	m_scene = new QGraphicsScene();
 	refresh_scene();
@@ -27,4 +30,14 @@ drawing_widget::refresh_scene()
 
 		j->setFlag(QGraphicsItem::ItemIsMovable);
 	}
+    
+    Project::edges e = m_project->get_edges();
+    for(size_t i = 0; i < e.size(); ++i) {
+        node* node1 = e[i]->firstNode();
+        node* node2 = e[i]->secondNode();
+        std::cout << node1->get_x() + 10 <<" " << node1->get_y() + 10 << " " << node2->get_x() << " " <<  node2->get_y() << std::endl;
+        m_scene->addLine(node1->get_x() + 10, node1->get_y() + 10, 
+                node2->get_x() + 10, node2->get_y() + 10);
+    }
+//    QObject::connect(m_scene, SIGNAL(changed(const QList<QRectF> &)), this, SLOT(refresh_scene()));
 }
