@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include "propertywindow.h"
+#include "../database/project.hpp"
 
 PropertyDialog::PropertyDialog(QWidget* parent, Instance* inst) : QDialog(parent)
 {
@@ -14,11 +15,11 @@ PropertyDialog::PropertyDialog(QWidget* parent, Instance* inst) : QDialog(parent
 
     masterNameLabel = new QLabel("Master Name");
     const Module* masterModule = instance->masterModule();
-    masterNameEdit = new QLineEdit(masterModule->name().c_str());
+    masterNameEdit = new QLabel(masterModule->name().c_str());
     masterNameLabel->setBuddy(masterNameEdit);
 
     parentNameLabel = new QLabel("Parent Name");
-    const Module* parentModule = instance->parentModule();
+    Module* parentModule = instance->parentModule();
     parentNameEdit = new QLineEdit(parentModule->name().c_str());
     parentNameLabel->setBuddy(parentNameEdit);
 
@@ -60,12 +61,21 @@ PropertyDialog::PropertyDialog(QWidget* parent, Instance* inst) : QDialog(parent
 void
 PropertyDialog::saveData()
 {
-    QString masterName = masterNameEdit->text();
-    QString parentName = parentNameEdit->text();
-
     instanceName = nameEdit->text().toUtf8().constData();
     instance->setName(instanceName);
-    std::cout<<instance->name()<<std::endl;
 
+    Project* proj = Project::get();
+    std::string parentName = parentNameEdit->text().toUtf8().constData();
+    Module* parentModule = instance->parentModule();
+    if (parentName != parentModule->name())
+    {
+	Module* newParentModule = proj->getModuleByName(parentName);
+	if (newParentModule != NULL)
+	{
+		parentModule->removeInstance(instanceName);
+		instance->setParentModule(newParentModule);
+		newParentModule->addInstance(instance);
+	}
+    }	
     close();
 }

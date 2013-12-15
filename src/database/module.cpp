@@ -36,6 +36,28 @@ Module::addInstance(const std::string& name, const Module* master)
     return inst;
 }
 
+void 
+Module::addInstance(Instance* inst)
+{
+	instances_.push_back(inst);
+}
+
+void
+Module::removeInstance(const std::string& name)
+{
+	int position = 0;
+	for(unsigned int i = 0; i < instances_.size(); ++i)
+	{
+        	if(instances_[i]->name() == name)
+		{
+			position = i;
+			break;
+		}
+	}		
+	instances_.erase(instances_.begin() + position);
+ 
+}
+
 const Module::InstanceCollection&
 Module::instances() const 
 { 

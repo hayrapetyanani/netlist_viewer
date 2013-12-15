@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <../database/module.hpp>
+#include <../database/project.hpp>
 
 class ModulePropertyDialog : public QDialog
 {

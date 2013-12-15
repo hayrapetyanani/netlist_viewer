@@ -28,6 +28,8 @@ public:
     Module* getModule(const std::string& str); 
     bool removeModule(const std::string& str);
     const ModuleCollection& getModules();
+    bool checkIfModuleExists(const std::string& str);	
+    Module* getModuleByName(const std::string& str);	
 
     ~Project();
 

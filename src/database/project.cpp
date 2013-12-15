@@ -61,6 +61,33 @@ Project::removeModule(const std::string& str)
     return false;
 }
 
+bool
+Project::checkIfModuleExists(const std::string& str) 
+{
+    for (unsigned int i = 0; i < modules_.size(); ++i) 
+    {
+	if (modules_[i]->name() == str)
+	{
+		return true;
+	}
+    }
+
+    return false;	
+}
+
+Module* 
+Project::getModuleByName(const std::string& str)
+{
+    for (unsigned int i = 0; i < modules_.size(); ++i) 
+    {
+	if (modules_[i]->name() == str)
+	{
+		return modules_[i];
+	}
+    }
+
+    return NULL;
+}
 
 const Project::ModuleCollection& 
 Project::getModules()

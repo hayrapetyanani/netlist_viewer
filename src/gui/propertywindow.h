@@ -19,7 +19,7 @@ private:
     QPushButton* saveButton;
     QPushButton* cancelButton;
     QLineEdit *nameEdit;
-    QLineEdit *masterNameEdit;
+    QLabel *masterNameEdit;
     QLineEdit *parentNameEdit;
     QLabel* masterNameLabel;
     QLabel* parentNameLabel;

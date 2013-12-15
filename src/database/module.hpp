@@ -24,6 +24,8 @@ public:
 	void addPort(const Port& port);
     const PortCollection& ports() const;
 	Instance* addInstance(const std::string& name, const Module* master);
+	void addInstance(Instance* inst);
+	void removeInstance(const std::string& name);
 	const InstanceCollection& instances() const;
     Instance* getInstance(const std::string name);
 	void addNet(const Net& net);

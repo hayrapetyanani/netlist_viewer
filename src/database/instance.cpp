@@ -1,7 +1,7 @@
 #include "instance.hpp"
 #include "instance_port.hpp"
 	
-Instance::Instance(std::string n, const Module* mModule, const Module* pModule)
+Instance::Instance(std::string n, const Module* mModule, Module* pModule)
         : name_(n)
         , masterModule_(mModule)	
         ,parentModule_(pModule)	
@@ -40,7 +40,7 @@ Instance::masterModule() const
     return masterModule_; 
 }
 
-const Module*
+Module*
 Instance::parentModule() const 
 { 
     return parentModule_; 
@@ -53,7 +53,7 @@ Instance::setMasterModule(const Module* module)
 }
 
 void 
-Instance::setParentModule(const Module* module) 
+Instance::setParentModule(Module* module) 
 { 
     parentModule_ = module; 
 }

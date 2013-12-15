@@ -31,18 +31,33 @@ ModulePropertyDialog::ModulePropertyDialog(QWidget* parent, Module* modl) : QDia
     portsLayout->addWidget(portsLabel);
     Module::PortCollection ports = module->ports();
     foreach (Port p, ports) {
-        QLabel* port = new QLabel(p.name().c_str());
-        portsLayout->addWidget(port);
+	QHBoxLayout *portNameLayout = new QHBoxLayout;
+	if (p.type() == Port::in) 
+	{
+		QLabel* inLabel = new QLabel("In Port: ");				
+		QLabel* port = new QLabel(p.name().c_str());
+		portNameLayout->addWidget(inLabel);
+		portNameLayout->addWidget(port);
+	}
+	else 
+	{
+		QLabel* inLabel = new QLabel("Out Port: ");				
+		QLabel* port = new QLabel(p.name().c_str());
+		portNameLayout->addWidget(inLabel);
+		portNameLayout->addWidget(port);
+	}
+        
+        portsLayout->addLayout(portNameLayout);
     }
 
     QVBoxLayout *netsLayout = new QVBoxLayout;
     QLabel* netsLabel = new QLabel("Nets");
     netsLayout->addWidget(netsLabel);
-//    Module::NetCollection nets = module->nets();
-//    foreach (Net n, nets) {
-//        QLabel* netName = new QLabel(n.name().c_str());
-//        netsLayout->addWidget(netName);
-//    }
+    Module::NetCollection nets = module->nets();
+    foreach (Net n, nets) {
+        QLabel* netName = new QLabel(n.name().c_str());
+        netsLayout->addWidget(netName);
+    }
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(nameLayout);
@@ -57,7 +72,12 @@ ModulePropertyDialog::ModulePropertyDialog(QWidget* parent, Module* modl) : QDia
 void
 ModulePropertyDialog::saveData()
 {
-    QString name = nameEdit->text();
-
-    close();
+	QString name = nameEdit->text();
+    
+	std::string moduleName = nameEdit->text().toUtf8().constData();
+    	Project* proj = Project::get();
+	if (!proj->checkIfModuleExists(moduleName))
+		module->setName(moduleName);
+	
+	close();
 }
