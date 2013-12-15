@@ -19,6 +19,7 @@ private:
     QPushButton* saveButton;
     QPushButton* cancelButton;
     QLineEdit *nameEdit;
+    QLineEdit* portNameEdit;
     Module* module;
 };
 
